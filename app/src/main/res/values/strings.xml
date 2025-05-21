@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LivrariaApp</string>
+    <string name="button_add">Add book</string>
+    <string name="text_AddBook">Add Book</string>
+    <string name="text_bookTitle">Title</string>
+    <string name="text_Author">Author</string>
+    <string name="text_PublicationDate">MM/DD/YYYY</string>
+    <string name="bn_Stars">Stars</string>
+    <string name="switch_Read">Read</string>
+    <string name="button_Save">Save</string>
+</resources>

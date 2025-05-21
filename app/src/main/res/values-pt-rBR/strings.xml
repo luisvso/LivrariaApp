@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LivrariaApp</string>
+    <string name="button_add">Adicionar Livro</string>
+    <string name="text_AddBook">Adicionar Livro</string>
+    <string name="text_bookTitle">Título</string>
+    <string name="text_Author">Autor</string>
+    <string name="text_PublicationDate">DD/MM/YYYY</string>
+    <string name="bn_Stars">Estrelas</string>
+    <string name="switch_Read">Lido</string>
+    <string name="button_Save">Salvar</string>
+</resources>
