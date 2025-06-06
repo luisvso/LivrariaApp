@@ -9,14 +9,14 @@
 
     <TextView
         android:id="@+id/text_addBook"
-        android:layout_width="143dp"
+        android:layout_width="111dp"
         android:layout_height="36dp"
         android:allowUndo="false"
         android:text="@string/text_AddBook"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.623"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.043" />
@@ -41,7 +41,7 @@
         android:layout_height="46dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/text_Author"
+        android:hint="Author"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -63,6 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textAuthor"
         app:layout_constraintVertical_bias="0.052" />
 
+
     <Button
         android:id="@+id/button_Stars"
         android:layout_width="wrap_content"
@@ -74,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDate"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Switch
         android:id="@+id/switchRead"
