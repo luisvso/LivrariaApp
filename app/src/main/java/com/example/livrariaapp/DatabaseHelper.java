@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTableAuthor = "CREATE TABLE Author (" +
                 "Id_author INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "Nome_Author TEXT NOT NULL);";
+                "Nome TEXT NOT NULL);";
 
 
         String createTableBook = "CREATE TABLE Book (" +

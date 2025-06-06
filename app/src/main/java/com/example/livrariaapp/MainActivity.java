@@ -19,40 +19,63 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ListView listView;
+    private BookAdapter adapter;
+    private List<Book> bookList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.textPublicationDate), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        listView = findViewById(R.id.listView);
+
+        loadBooksFromDatabase();
 
         Button addBookButton = findViewById(R.id.button_add);
         addBookButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         });
+    }
 
-        List<String> booklist = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT Title FROM Book", null);
+    private void loadBooksFromDatabase() {
+        bookList = new ArrayList<>();
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Buscando os dados completos do livro
+        String query = "SELECT b.Title, a.Nome, b.Status, b.Rating " +
+                "FROM Book b INNER JOIN Author a ON b.Id_author = a.Id_author";
+
+        Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
             do {
-                String titulo = cursor.getString(0);
-                booklist.add(titulo);
+                String title = cursor.getString(0);
+                String author = cursor.getString(1);
+                String status = cursor.getString(2);
+                float rating = cursor.getFloat(3);
+
+                bookList.add(new Book(title, author, status, rating));
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         db.close();
 
-        ListView listView = findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, booklist);
+        adapter = new BookAdapter(this, bookList);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            loadBooksFromDatabase();
+            adapter.notifyDataSetChanged();
+        }
     }
 }
