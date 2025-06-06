@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "Id_author INTEGER," +
                 "Title TEXT NOT NULL," +
                 "Status INTEGER," +
-                "Rating INTEGER," +
+                "Rating REAL," +
                 "FOREIGN KEY(Id_author) REFERENCES Author(Id_author));";
 
         db.execSQL(createTableAuthor);

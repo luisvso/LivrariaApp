@@ -50,53 +50,56 @@
         app:layout_constraintVertical_bias="0.037" />
 
 
-    <Button
-        android:id="@+id/button_Stars"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bn_Stars"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAuthor"
-        app:layout_constraintVertical_bias="0.219" />
-
     <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
-        app:layout_constraintTop_toBottomOf="@+id/button_Stars"
         app:chipSpacing="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
+        app:layout_constraintTop_toBottomOf="@+id/textAuthor"
+        app:layout_constraintVertical_bias="0.51"
         app:singleSelection="true"
-        android:id="@+id/chipGroup">
+        tools:layout_editor_absoluteX="0dp">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipLendo"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="Lendo">
-        </com.google.android.material.chip.Chip>
+            android:text="Lendo"></com.google.android.material.chip.Chip>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipLido"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="Lido">
-        </com.google.android.material.chip.Chip>
+            android:text="Lido"></com.google.android.material.chip.Chip>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipNlido"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="Não Lido">
-        </com.google.android.material.chip.Chip>
+            android:text="Não Lido"></com.google.android.material.chip.Chip>
 
     </com.google.android.material.chip.ChipGroup>
 
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:progressTint="@color/star_yellow"
+        android:rating="0"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/chipGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAuthor" />
 
     <Button
         android:id="@+id/buttonSave"

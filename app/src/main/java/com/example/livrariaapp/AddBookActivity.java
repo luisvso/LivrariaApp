@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -49,15 +50,12 @@ public class AddBookActivity extends AppCompatActivity {
             String title = inputTitle.getText().toString().trim();
             String author = inputAuthor.getText().toString().trim();
 
-            // Captura o chip selecionado
             int selectedChipId = chipGroup.getCheckedChipId();
             String status = "";
             if (selectedChipId != -1) {
-                Chip selectedChip = findViewById(selectedChipId);
+                Chip selectedChip = chipGroup.findViewById(selectedChipId);  // <- aqui a correção
                 status = selectedChip.getText().toString();
             }
-
-            int stars = 0;
 
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -78,12 +76,15 @@ public class AddBookActivity extends AppCompatActivity {
                 authorId = db.insert("Author", null, authorValues);
             }
 
+            RatingBar ratingBar = findViewById(R.id.ratingBar);
+            float rating = ratingBar.getRating();
+
             ContentValues values = new ContentValues();
             // armazena o valor da variavel titulo na coluna da tabela
             values.put("Title", title);
             values.put("Id_author", authorId);
             values.put("Status", status);
-            values.put("Rating", stars);
+            values.put("Rating", rating);
 
             long result = db.insert("Book", null, values);
 

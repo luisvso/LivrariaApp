@@ -29,23 +29,38 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        listView = findViewById(R.id.listView);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.textPublicationDate), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        loadBooksFromDatabase();
+        listView = findViewById(R.id.listView);
+        bookList = new ArrayList<>();
+        adapter = new BookAdapter(this, bookList);
+        listView.setAdapter(adapter);
 
         Button addBookButton = findViewById(R.id.button_add);
         addBookButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
             startActivityForResult(intent, 1);
         });
+
+        loadBooksFromDatabase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadBooksFromDatabase();  // Atualiza a lista sempre que a Activity volta para frente
     }
 
     private void loadBooksFromDatabase() {
-        bookList = new ArrayList<>();
+        bookList.clear();
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        // Buscando os dados completos do livro
         String query = "SELECT b.Title, a.Nome, b.Status, b.Rating " +
                 "FROM Book b INNER JOIN Author a ON b.Id_author = a.Id_author";
 
@@ -65,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         db.close();
 
-        adapter = new BookAdapter(this, bookList);
-        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -75,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == 1 && resultCode == RESULT_OK){
             loadBooksFromDatabase();
-            adapter.notifyDataSetChanged();
         }
     }
 }

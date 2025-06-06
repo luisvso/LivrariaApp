@@ -1,6 +1,7 @@
 package com.example.livrariaapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,26 @@ public class BookAdapter extends ArrayAdapter<Book> {
         chipStatus.setText(book.status);
         ratingBar.setRating(book.rating);
 
-        // Opcional: mudar cor do chip conforme status
-        // chipStatus.setChipBackgroundColor(...)
+
+        chipStatus.setText(book.status);  // Isso você já tem
+
+        switch (book.status.toLowerCase().trim()) {
+            case "lido":
+                chipStatus.setChipBackgroundColorResource(R.color.verde_lido);
+                break;
+            case "lendo":
+                chipStatus.setChipBackgroundColorResource(R.color.amarelo_lendo);
+                break;
+            case "não lido":
+                chipStatus.setChipBackgroundColorResource(R.color.vermelho_nLido);
+                break;
+            default:
+                chipStatus.setChipBackgroundColorResource(R.color.white);
+                break;
+        }
+
+        Log.d("BookAdapter", "Título: " + book.title + ", Rating: " + book.rating);
+
 
         return convertView;
     }
