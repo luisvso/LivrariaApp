@@ -18,20 +18,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTableAuthor = "CREATE TABLE Author (" +
                 "Id_author INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "Nome TEXT NOT NULL);";
+                "Nome_Author TEXT NOT NULL);";
 
 
         String createTableBook = "CREATE TABLE Book (" +
                 "Id_book INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Id_author INTEGER," +
                 "Title TEXT NOT NULL," +
-                "Data_publication TEXT," +
-                "Status_read INTEGER," +
+                "Status INTEGER," +
                 "Rating INTEGER," +
                 "FOREIGN KEY(Id_author) REFERENCES Author(Id_author));";
 
-        db.execSQL(createTableBook);
         db.execSQL(createTableAuthor);
+        db.execSQL(createTableBook);
+
     }
 
 

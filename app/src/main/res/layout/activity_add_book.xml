@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/text_bookTitle"
+        android:hint="Title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -49,45 +49,54 @@
         app:layout_constraintTop_toBottomOf="@+id/textNameBook"
         app:layout_constraintVertical_bias="0.037" />
 
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAuthor"
-        app:layout_constraintVertical_bias="0.052" />
-
 
     <Button
         android:id="@+id/button_Stars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:text="@string/bn_Stars"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textAuthor"
+        app:layout_constraintVertical_bias="0.219" />
 
-    <Switch
-        android:id="@+id/switchRead"
-        android:layout_width="wrap_content"
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/switch_Read"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintTop_toBottomOf="@+id/button_Stars"
-        app:layout_constraintVertical_bias="0.162" />
+        app:chipSpacing="12dp"
+        app:singleSelection="true"
+        android:id="@+id/chipGroup">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipLendo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Lendo">
+        </com.google.android.material.chip.Chip>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipLido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Lido">
+        </com.google.android.material.chip.Chip>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipNlido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Não Lido">
+        </com.google.android.material.chip.Chip>
+
+    </com.google.android.material.chip.ChipGroup>
+
 
     <Button
         android:id="@+id/buttonSave"
@@ -96,9 +105,8 @@
         android:text="@string/button_Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchRead"
-        app:layout_constraintVertical_bias="0.204" />
+        app:layout_constraintVertical_bias="0.849" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
