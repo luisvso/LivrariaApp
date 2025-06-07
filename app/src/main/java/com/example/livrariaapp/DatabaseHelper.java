@@ -41,4 +41,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Book");
         onCreate(db);
     }
+
+    public int deleteBook(int bookId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete("Book", "Id_book=?", new String[]{String.valueOf(bookId)});
+        db.close();
+        return rowsDeleted;
+    }
 }

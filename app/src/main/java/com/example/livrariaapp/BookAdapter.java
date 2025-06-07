@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -17,6 +18,19 @@ import com.google.android.material.chip.Chip;
 import java.util.List;
 
 public class BookAdapter extends ArrayAdapter<Book> {
+
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(Book book);
+    }
+
+    private OnDeleteClickListener deleteListener;
+
+
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.deleteListener = listener;
+    }
+
 
     public BookAdapter(@NonNull Context context, @NonNull List<Book> books) {
         super(context, 0, books);
@@ -36,13 +50,13 @@ public class BookAdapter extends ArrayAdapter<Book> {
         Chip chipStatus = convertView.findViewById(R.id.chipStatus);
         RatingBar ratingBar = convertView.findViewById(R.id.ratingBar);
 
+        ImageButton btnDelete = convertView.findViewById(R.id.btnDeleteLivro);
+
+
         tvTitulo.setText(book.title);
         tvAutor.setText(book.author);
         chipStatus.setText(book.status);
         ratingBar.setRating(book.rating);
-
-
-        chipStatus.setText(book.status);  // Isso você já tem
 
         switch (book.status.toLowerCase().trim()) {
             case "lido":
@@ -61,8 +75,13 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         Log.d("BookAdapter", "Título: " + book.title + ", Rating: " + book.rating);
 
-
+        if (btnDelete != null) {
+            btnDelete.setOnClickListener(v -> {
+                if (deleteListener != null && book != null) {
+                    deleteListener.onDeleteClick(book);
+                }
+            });
+        }
         return convertView;
     }
 }
-

@@ -4,13 +4,13 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+
 import android.database.Cursor;
 
 public class AddBookActivity extends AppCompatActivity {
@@ -89,22 +90,15 @@ public class AddBookActivity extends AppCompatActivity {
             long result = db.insert("Book", null, values);
 
             // 1 = sucesso e -1 = erro
-//            if (result != -1) {
-//                Toast.makeText(this, "Livro add com sucesso", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(AddBookActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            } else {
-//                Toast.makeText(this, "Erro ao adicionar livro", Toast.LENGTH_SHORT).show();
-//            }
-
             if (result != -1) {
-                Log.d("AddBookActivity", "Livro salvo com sucesso! ID: " + result);
-                Toast.makeText(this, "Livro salvo no banco!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Livro add com sucesso", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddBookActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             } else {
-                Log.e("AddBookActivity", "Erro ao salvar livro");
-                Toast.makeText(this, "Falha ao salvar o livro!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Erro ao adicionar livro", Toast.LENGTH_SHORT).show();
             }
+
 
             db.close();
         });
