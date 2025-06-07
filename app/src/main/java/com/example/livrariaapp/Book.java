@@ -1,6 +1,8 @@
 package com.example.livrariaapp;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     public String title;
     public String author;
     public String status;
@@ -41,5 +43,25 @@ public class Book {
     public Integer getId() {
         return id;
     }
-}
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+}

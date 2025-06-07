@@ -19,7 +19,6 @@ import java.util.List;
 
 public class BookAdapter extends ArrayAdapter<Book> {
 
-
     public interface OnDeleteClickListener {
         void onDeleteClick(Book book);
     }
@@ -31,6 +30,16 @@ public class BookAdapter extends ArrayAdapter<Book> {
         this.deleteListener = listener;
     }
 
+    public interface OnEditClickListener {
+        void onEditClick(Book book);
+    }
+
+    private OnEditClickListener editListener;
+
+    public void setOnEditClickListener(OnEditClickListener listener) {
+        this.editListener = listener;
+    }
+
 
     public BookAdapter(@NonNull Context context, @NonNull List<Book> books) {
         super(context, 0, books);
@@ -39,7 +48,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.task_layout, parent, false);
         }
 
@@ -50,15 +59,15 @@ public class BookAdapter extends ArrayAdapter<Book> {
         Chip chipStatus = convertView.findViewById(R.id.chipStatus);
         RatingBar ratingBar = convertView.findViewById(R.id.ratingBar);
 
-        ImageButton btnDelete = convertView.findViewById(R.id.btnDeleteLivro);
+        ImageButton btnDelete = convertView.findViewById(R.id.button_deleteBook);
+        ImageButton btnEdit = convertView.findViewById(R.id.button_editBook);
 
+        tvTitulo.setText(book.getTitle());
+        tvAutor.setText(book.getAuthor());
+        chipStatus.setText(book.getStatus());
+        ratingBar.setRating(book.getRating());
 
-        tvTitulo.setText(book.title);
-        tvAutor.setText(book.author);
-        chipStatus.setText(book.status);
-        ratingBar.setRating(book.rating);
-
-        switch (book.status.toLowerCase().trim()) {
+        switch (book.getStatus().toLowerCase().trim()) {
             case "lido":
                 chipStatus.setChipBackgroundColorResource(R.color.verde_lido);
                 break;
@@ -73,12 +82,20 @@ public class BookAdapter extends ArrayAdapter<Book> {
                 break;
         }
 
-        Log.d("BookAdapter", "Título: " + book.title + ", Rating: " + book.rating);
+        Log.d("BookAdapter", "Título: " + book.getTitle() + ", Rating: " + book.getRating());
 
         if (btnDelete != null) {
             btnDelete.setOnClickListener(v -> {
                 if (deleteListener != null && book != null) {
                     deleteListener.onDeleteClick(book);
+                }
+            });
+        }
+
+        if (btnEdit != null) {
+            btnEdit.setOnClickListener(v -> {
+                if (editListener != null && book != null) {
+                    editListener.onEditClick(book);
                 }
             });
         }

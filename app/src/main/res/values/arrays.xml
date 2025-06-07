@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="book_status_options">
+        <item>Lido</item>
+        <item>Lendo</item>
+        <item>Não Lido</item>
+    </string-array>
+</resources>

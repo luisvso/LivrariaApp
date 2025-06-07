@@ -9,4 +9,5 @@
     <string name="bn_Stars">Estrelas</string>
     <string name="switch_Read">Lido</string>
     <string name="button_Save">Salvar</string>
+    <string name="button_Update">Atualizar livro</string>
 </resources>

@@ -18,13 +18,18 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MainActivity extends AppCompatActivity implements BookAdapter.OnDeleteClickListener {
+public class MainActivity extends AppCompatActivity implements
+        BookAdapter.OnDeleteClickListener,
+        BookAdapter.OnEditClickListener {
 
     private ListView listView;
     private BookAdapter adapter;
     private List<Book> bookList;
     private DatabaseHelper databaseHelper;
+
+    private static final int ADD_BOOK_REQUEST = 1;
+    private static final int EDIT_BOOK_REQUEST = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +48,15 @@ public class MainActivity extends AppCompatActivity implements BookAdapter.OnDel
         adapter = new BookAdapter(this, bookList);
         listView.setAdapter(adapter);
 
-
         adapter.setOnDeleteClickListener(this);
-
+        adapter.setOnEditClickListener(this);
 
         databaseHelper = new DatabaseHelper(this);
 
         Button addBookButton = findViewById(R.id.button_add);
         addBookButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, ADD_BOOK_REQUEST);
         });
 
         loadBooksFromDatabase();
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements BookAdapter.OnDel
     @Override
     protected void onResume() {
         super.onResume();
-        loadBooksFromDatabase();  // Atualiza a lista sempre que a Activity volta para frente
+        loadBooksFromDatabase();
     }
 
     private void loadBooksFromDatabase() {
@@ -79,10 +83,11 @@ public class MainActivity extends AppCompatActivity implements BookAdapter.OnDel
                 int id = cursor.getInt(0);
                 String title = cursor.getString(1);
                 String author = cursor.getString(2);
-                String status = cursor.getString(3);
+                int statusInt = cursor.getInt(3);
+                String statusString = convertStatusIntToString(statusInt);
                 float rating = cursor.getFloat(4);
 
-                bookList.add(new Book(id, title, author, status, rating));
+                bookList.add(new Book(id, title, author, statusString, rating));
             } while (cursor.moveToNext());
         }
 
@@ -92,24 +97,31 @@ public class MainActivity extends AppCompatActivity implements BookAdapter.OnDel
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            loadBooksFromDatabase();
+    private String convertStatusIntToString(int statusInt) {
+        String[] statusOptions = getResources().getStringArray(R.array.book_status_options);
+        if (statusInt >= 0 && statusInt < statusOptions.length) {
+            return statusOptions[statusInt];
         }
+        return "Desconhecido";
     }
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if((requestCode == ADD_BOOK_REQUEST || requestCode == EDIT_BOOK_REQUEST) && resultCode == RESULT_OK){
+            loadBooksFromDatabase();
+        }
+    }
+
+    @Override
     public void onDeleteClick(Book bookToDelete) {
         new AlertDialog.Builder(this)
-                .setTitle("Confirmar Exclusão")
+                .setTitle("Confirmar exclusão")
                 .setMessage("Tem certeza que deseja excluir o livro '" + bookToDelete.getTitle() + "'?")
                 .setPositiveButton("Sim", (dialog, which) -> {
                     int rowsAffected = databaseHelper.deleteBook(bookToDelete.getId());
-
                     if (rowsAffected > 0) {
                         Toast.makeText(MainActivity.this, "Livro excluído com sucesso!", Toast.LENGTH_SHORT).show();
                         loadBooksFromDatabase();
@@ -119,5 +131,12 @@ public class MainActivity extends AppCompatActivity implements BookAdapter.OnDel
                 })
                 .setNegativeButton("Não", null)
                 .show();
+    }
+
+    @Override
+    public void onEditClick(Book bookToEdit) {
+        Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
+        intent.putExtra("book_to_edit", bookToEdit);
+        startActivityForResult(intent, EDIT_BOOK_REQUEST);
     }
 }

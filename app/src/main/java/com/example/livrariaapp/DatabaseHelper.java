@@ -1,5 +1,6 @@
 package com.example.livrariaapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -48,4 +49,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rowsDeleted;
     }
+
+    public int updateBook(Book book, int authorId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Title", book.getTitle());
+        values.put("Status", convertStatusToInt(book.getStatus()));
+        values.put("Rating", book.getRating());
+        values.put("Id_author", authorId);
+
+        int rowsAffected = db.update("Book", values, "Id_book = ?", new String[]{String.valueOf(book.getId())});
+        db.close();
+        return rowsAffected;
+    }
+
+    int convertStatusToInt(String status) {
+        switch (status.toLowerCase().trim()) {
+            case "lido":
+                return 0;
+            case "lendo":
+                return 1;
+            case "não lido":
+                return 2;
+            default:
+                return -1;
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.livrariaapp;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,19 +15,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-public class AddBookActivity extends AppCompatActivity {
+public class EditBookActivity extends AppCompatActivity {
 
     private EditText editTextTitle, editTextAuthor;
     private ChipGroup chipGroupStatus;
     private Chip chipLendo, chipLido, chipNlido;
     private RatingBar ratingBar;
-    private Button buttonSave;
+    private Button buttonUpdate;
     private DatabaseHelper dbHelper;
+
+    private Book bookToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book);
+        setContentView(R.layout.activity_edit_book);
 
         editTextTitle = findViewById(R.id.textNameBook);
         editTextAuthor = findViewById(R.id.textAuthor);
@@ -35,14 +38,41 @@ public class AddBookActivity extends AppCompatActivity {
         chipLido = findViewById(R.id.chipLido);
         chipNlido = findViewById(R.id.chipNlido);
         ratingBar = findViewById(R.id.ratingBar);
-        buttonSave = findViewById(R.id.buttonUpdate);
+        buttonUpdate = findViewById(R.id.buttonUpdate);
 
         dbHelper = new DatabaseHelper(this);
 
-        buttonSave.setOnClickListener(v -> saveNewBook());
+        Intent intent = getIntent();
+        if (intent.hasExtra("book_to_edit")) {
+            bookToEdit = (Book) intent.getSerializableExtra("book_to_edit");
+            if (bookToEdit != null) {
+                editTextTitle.setText(bookToEdit.getTitle());
+                editTextAuthor.setText(bookToEdit.getAuthor());
+                ratingBar.setRating(bookToEdit.getRating());
+
+                String currentStatus = bookToEdit.getStatus().toLowerCase().trim();
+                if (currentStatus.equals("lendo")) {
+                    chipLendo.setChecked(true);
+                } else if (currentStatus.equals("lido")) {
+                    chipLido.setChecked(true);
+                } else if (currentStatus.equals("não lido")) {
+                    chipNlido.setChecked(true);
+                }
+
+
+            } else {
+                Toast.makeText(this, "Erro: Livro para edição não encontrado.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } else {
+            Toast.makeText(this, "Erro: Nenhum livro especificado para edição.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        buttonUpdate.setOnClickListener(v -> updateBook());
     }
 
-    private void saveNewBook() {
+    private void updateBook() {
         String title = editTextTitle.getText().toString().trim();
         String authorName = editTextAuthor.getText().toString().trim();
         float rating = ratingBar.getRating();
@@ -70,30 +100,26 @@ public class AddBookActivity extends AppCompatActivity {
             Toast.makeText(this, "Erro ao processar autor.", Toast.LENGTH_SHORT).show();
             return;
         }
-        long newRowId = addBook(title, authorId, status, rating);
-        if (newRowId != -1) {
-            Toast.makeText(this, "Livro adicionado com sucesso!", Toast.LENGTH_SHORT).show();
+
+        bookToEdit.setTitle(title);
+        bookToEdit.setAuthor(authorName);
+        bookToEdit.setStatus(status);
+        bookToEdit.setRating(rating);
+
+        int rowsAffected = dbHelper.updateBook(bookToEdit, authorId);
+        if (rowsAffected > 0) {
+            Toast.makeText(this, "Livro atualizado com sucesso!", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         } else {
-            Toast.makeText(this, "Erro ao adicionar livro.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro ao atualizar livro.", Toast.LENGTH_SHORT).show();
         }
-    }
-    private long addBook(String title, int authorId, String status, float rating) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("Id_author", authorId);
-        values.put("Title", title);
-        values.put("Status", dbHelper.convertStatusToInt(status));
-        values.put("Rating", rating);
-        long newRowId = db.insert("Book", null, values);
-        db.close();
-        return newRowId;
     }
 
     private int getOrCreateAuthor(String authorName) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int authorId = -1;
+
         Cursor cursor = db.query("Author", new String[]{"Id_author"}, "Nome = ?",
                 new String[]{authorName}, null, null, null);
         if (cursor.moveToFirst()) {

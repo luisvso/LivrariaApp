@@ -8,4 +8,5 @@
     <string name="bn_Stars">Stars</string>
     <string name="switch_Read">Read</string>
     <string name="button_Save">Save</string>
+    <string name="button_Update">Update book</string>
 </resources>
