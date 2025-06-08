@@ -21,4 +21,8 @@
     <string name="messageNoBookSpecified">Erro: Nenhum livro especificado para edição.</string>
     <string name="messageBookUpdated">Livro atualizado com sucesso!</string>
     <string name="messageErrorUpdatingBook">Erro ao atualizar livro.</string>
+    <string name="messageConfirmDeletion">Tem certeza que deseja excluir o livro \'%s\'?</string>
+    <string name="textConfirmDeletion">Confirmar exclusão</string>
+    <string name="messageBookDeleted">Livro excluído com sucesso!</string>
+    <string name="messageErrorDeletingBook">Erro ao excluir livro.</string>
 </resources>

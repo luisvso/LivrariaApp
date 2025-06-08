@@ -31,6 +31,8 @@ public class BookAdapter extends ArrayAdapter<Book> {
     }
 
     public interface OnEditClickListener {
+        void onDeleteClick(Book bookToDelete, Context context);
+
         void onEditClick(Book book);
     }
 

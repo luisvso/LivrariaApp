@@ -1,5 +1,6 @@
 package com.example.livrariaapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        BookAdapter.OnDeleteClickListener,
         BookAdapter.OnEditClickListener {
 
     private ListView listView;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements
         adapter = new BookAdapter(this, bookList);
         listView.setAdapter(adapter);
 
-        adapter.setOnDeleteClickListener(this);
+        adapter.setOnDeleteClickListener((BookAdapter.OnDeleteClickListener) this);
         adapter.setOnEditClickListener(this);
 
         databaseHelper = new DatabaseHelper(this);
@@ -116,17 +116,18 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onDeleteClick(Book bookToDelete) {
+    public void onDeleteClick(Book bookToDelete, Context context) {
+        String message = context.getString(R.string.messageConfirmDeletion, bookToDelete.getTitle());
         new AlertDialog.Builder(this)
-                .setTitle("Confirmar exclusão")
-                .setMessage("Tem certeza que deseja excluir o livro '" + bookToDelete.getTitle() + "'?")
+                .setTitle(R.string.textConfirmDeletion)
+                .setMessage(message)
                 .setPositiveButton("Sim", (dialog, which) -> {
                     int rowsAffected = databaseHelper.deleteBook(bookToDelete.getId());
                     if (rowsAffected > 0) {
-                        Toast.makeText(MainActivity.this, "Livro excluído com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.messageBookDeleted, Toast.LENGTH_SHORT).show();
                         loadBooksFromDatabase();
                     } else {
-                        Toast.makeText(MainActivity.this, "Erro ao excluir livro.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.messageErrorDeletingBook, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Não", null)

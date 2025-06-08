@@ -20,4 +20,8 @@
     <string name="messageNoBookSpecified">Error: No book specified for editing.</string>
     <string name="messageBookUpdated">Book updated successfully!</string>
     <string name="messageErrorUpdatingBook">Error updating book.</string>
+    <string name="messageConfirmDeletion">Are you sure you want to delete the book \'%s\'?</string>
+    <string name="textConfirmDeletion">Confirm deletion</string>
+    <string name="messageBookDeleted">Book deleted successfully!</string>
+    <string name="messageErrorDeletingBook">Error deleting book.</string>
 </resources>
