@@ -7,7 +7,18 @@
     <string name="text_Author">Autor</string>
     <string name="text_PublicationDate">DD/MM/YYYY</string>
     <string name="bn_Stars">Estrelas</string>
-    <string name="switch_Read">Lido</string>
     <string name="button_Save">Salvar</string>
     <string name="button_Update">Atualizar livro</string>
+    <string name="statusRead">Lido</string>
+    <string name="statusReading">Lendo</string>
+    <string name="statusUnread">Não lido</string>
+    <string name="messageSelectStatus">Por favor, selecione um status.</string>
+    <string name="messageTitleAuthorEmpty">Título e Autor não podem ser vazios</string>
+    <string name="messageErrorProcessingAuthor">Erro ao processar autor.</string>
+    <string name="messageBookAdded">Livro adicionado com sucesso!</string>
+    <string name="messageErrorAddingBook">Erro ao adicionar livro.</string>
+    <string name="messageBookNotFound">Erro: Livro para edição não encontrado.</string>
+    <string name="messageNoBookSpecified">Erro: Nenhum livro especificado para edição.</string>
+    <string name="messageBookUpdated">Livro atualizado com sucesso!</string>
+    <string name="messageErrorUpdatingBook">Erro ao atualizar livro.</string>
 </resources>

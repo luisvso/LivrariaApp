@@ -61,11 +61,11 @@ public class EditBookActivity extends AppCompatActivity {
 
 
             } else {
-                Toast.makeText(this, "Erro: Livro para edição não encontrado.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.messageBookNotFound, Toast.LENGTH_SHORT).show();
                 finish();
             }
         } else {
-            Toast.makeText(this, "Erro: Nenhum livro especificado para edição.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageNoBookSpecified, Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -86,18 +86,18 @@ public class EditBookActivity extends AppCompatActivity {
         } else if (checkedChipId == R.id.chipNlido) {
             status = "Não Lido";
         } else {
-            Toast.makeText(this, "Por favor, selecione um status.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageSelectStatus, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (title.isEmpty() || authorName.isEmpty()) {
-            Toast.makeText(this, "Título e Autor não podem ser vazios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageTitleAuthorEmpty, Toast.LENGTH_SHORT).show();
             return;
         }
 
         int authorId = getOrCreateAuthor(authorName);
         if (authorId == -1) {
-            Toast.makeText(this, "Erro ao processar autor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageErrorProcessingAuthor, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -108,11 +108,11 @@ public class EditBookActivity extends AppCompatActivity {
 
         int rowsAffected = dbHelper.updateBook(bookToEdit, authorId);
         if (rowsAffected > 0) {
-            Toast.makeText(this, "Livro atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageBookUpdated, Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         } else {
-            Toast.makeText(this, "Erro ao atualizar livro.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageErrorUpdatingBook, Toast.LENGTH_SHORT).show();
         }
     }
 

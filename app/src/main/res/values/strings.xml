@@ -6,7 +6,18 @@
     <string name="text_Author">Author</string>
     <string name="text_PublicationDate">MM/DD/YYYY</string>
     <string name="bn_Stars">Stars</string>
-    <string name="switch_Read">Read</string>
     <string name="button_Save">Save</string>
     <string name="button_Update">Update book</string>
+    <string name="statusRead">Read</string>
+    <string name="statusReading">Reading</string>
+    <string name="statusUnread">Unread</string>
+    <string name="messageSelectStatus">Please select a status.</string>
+    <string name="messageTitleAuthorEmpty">Title and Author cannot be empty</string>
+    <string name="messageErrorProcessingAuthor">Error processing author.</string>
+    <string name="messageBookAdded">Book added successfully!</string>
+    <string name="messageErrorAddingBook">Error adding book.</string>
+    <string name="messageBookNotFound">Error: Book for editing not found.</string>
+    <string name="messageNoBookSpecified">Error: No book specified for editing.</string>
+    <string name="messageBookUpdated">Book updated successfully!</string>
+    <string name="messageErrorUpdatingBook">Error updating book.</string>
 </resources>

@@ -56,27 +56,27 @@ public class AddBookActivity extends AppCompatActivity {
         } else if (checkedChipId == R.id.chipNlido) {
             status = "Não Lido";
         } else {
-            Toast.makeText(this, "Por favor, selecione um status.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageSelectStatus, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (title.isEmpty() || authorName.isEmpty()) {
-            Toast.makeText(this, "Título e Autor não podem ser vazios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageTitleAuthorEmpty, Toast.LENGTH_SHORT).show();
             return;
         }
 
         int authorId = getOrCreateAuthor(authorName);
         if (authorId == -1) {
-            Toast.makeText(this, "Erro ao processar autor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageErrorProcessingAuthor, Toast.LENGTH_SHORT).show();
             return;
         }
         long newRowId = addBook(title, authorId, status, rating);
         if (newRowId != -1) {
-            Toast.makeText(this, "Livro adicionado com sucesso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageBookAdded, Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         } else {
-            Toast.makeText(this, "Erro ao adicionar livro.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.messageErrorAddingBook, Toast.LENGTH_SHORT).show();
         }
     }
     private long addBook(String title, int authorId, String status, float rating) {
