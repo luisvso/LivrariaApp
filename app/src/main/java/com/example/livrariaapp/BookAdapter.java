@@ -20,7 +20,7 @@ import java.util.List;
 public class BookAdapter extends ArrayAdapter<Book> {
 
     public interface OnDeleteClickListener {
-        void onDeleteClick(Book book);
+        void onDeleteClick(Book book, Context context);
     }
 
     private OnDeleteClickListener deleteListener;
@@ -31,7 +31,6 @@ public class BookAdapter extends ArrayAdapter<Book> {
     }
 
     public interface OnEditClickListener {
-        void onDeleteClick(Book bookToDelete, Context context);
 
         void onEditClick(Book book);
     }
@@ -89,7 +88,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
         if (btnDelete != null) {
             btnDelete.setOnClickListener(v -> {
                 if (deleteListener != null && book != null) {
-                    deleteListener.onDeleteClick(book);
+                    deleteListener.onDeleteClick(book, getContext());
                 }
             });
         }

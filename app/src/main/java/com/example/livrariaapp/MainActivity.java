@@ -19,8 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements
-        BookAdapter.OnEditClickListener {
+public class MainActivity extends AppCompatActivity implements BookAdapter.OnEditClickListener, BookAdapter.OnDeleteClickListener {
 
     private ListView listView;
     private BookAdapter adapter;
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if((requestCode == ADD_BOOK_REQUEST || requestCode == EDIT_BOOK_REQUEST) && resultCode == RESULT_OK){
+        if ((requestCode == ADD_BOOK_REQUEST || requestCode == EDIT_BOOK_REQUEST) && resultCode == RESULT_OK) {
             loadBooksFromDatabase();
         }
     }
